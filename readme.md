@@ -1,5 +1,7 @@
-> *Meme upon meme* 
-> *Grammar flows axial* 
+> *Meme upon meme*
+>
+> *Grammar flows axial*
+>
 > *Knowledge takes shape*
 
 

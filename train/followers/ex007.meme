@@ -71,13 +71,13 @@ comments created_at :min;id :cnt;post_id :grp>=50;;
 posts visibility =public;image_url ~".png";created_at :des>=2024-01-01;<=2024-12-31;_;%m;lim 20;;
 
 """ Org emails created on 2024-05-10, usernames A-Z """
-users email ~".org";created_at=2024-05-10;username :asc;_;;
+users email ~".org";created_at 2024-05-10;username :asc;_;;
 
 """ Comments on post 88 containing thanks between 2024-06-01 and 2025-01-31, newest first, take 15 """
 comments post_id 88;body ~"thanks";created_at :des>=2024-06-01;<=2025-01-31;_;%m;lim 15;;
 
 """ Likes by users 100+ on posts 50..500 on 2024-09-01, sort liker id ascending """
-likes user_id :asc>=100;post_id >=50;<=500;created_at=2024-09-01;_;;
+likes user_id :asc>=100;post_id >=50;<=500;created_at 2024-09-01;_;;
 
 """ Unread messages to recipient 42 mentioning meeting after 2024-03-01, newest first, limit 5 """
 messages recipient_id 42;read_flag !=true;body ~"meeting";created_at :des>=2024-03-01;_;%m;lim 5;;
@@ -86,16 +86,16 @@ messages recipient_id 42;read_flag !=true;body ~"meeting";created_at :des>=2024-
 users username "nina";id _;follows followee_id @;follower_id _;users id @;id _;profiles user_id @;bio _;website _;;
 
 """ Usernames and image URLs for post likes on 2024-11-11 """
-likes created_at=2024-11-11;post_id _;posts id @;image_url _;user_id _;users id @;username _;;
+likes created_at 2024-11-11;post_id _;posts id @;image_url _;user_id _;users id @;username _;;
 
 """ Avatars of authors for comments since 2025-01-01 on post 77 """
 comments post_id 77;created_at >=2025-01-01;user_id _;users id @;id _;profiles user_id @;avatar_url _;;
 
 """ Message bodies sent by people followed by aaron on 2025-07-04 """
-users username "aaron";id _;follows follower_id @;followee_id _;messages sender_id @;created_at=2025-07-04;body _;;
+users username "aaron";id _;follows follower_id @;followee_id _;messages sender_id @;created_at 2025-07-04;body _;;
 
 """ Profiles of users who liked alex posts on 2025-05-01, include name and location """
-users username "alex";id _;posts user_id @;id _;likes post_id @;created_at=2025-05-01;user_id _;users id @;id _;profiles user_id @;full_name _;location _;;
+users username "alex";id _;posts user_id @;id _;likes post_id @;created_at 2025-05-01;user_id _;users id @;id _;profiles user_id @;full_name _;location _;;
 
 """ Thread replies under comment 1234 with author usernames, oldest first """
 comments id 1234;comments parent_comment_id @;created_at :asc;user_id _;users id @;username _;;
@@ -134,16 +134,16 @@ users username "luna";id _;messages recipient_id @;created_at >=2025-01-01;sende
 users username "zoe";id _;posts user_id @;created_at >2024-12-01;id :grp;likes post_id @;created_at :min:des;;
 
 """ Public posts by amy or liam with .jpg images on 2024-07-01, id descending """
-users username "amy","liam";id _;posts user_id @;visibility =public;image_url ~".jpg";created_at=2024-07-01;id :des;_;;
+users username "amy","liam";id _;posts user_id @;visibility =public;image_url ~".jpg";created_at 2024-07-01;id :des;_;;
 
 """ Usernames in Berlin who signed up between 2024-01-01 and 2024-12-31, sorted A-Z """
 profiles location "Berlin";user_id _;users id @;created_at >=2024-01-01;<=2024-12-31;username :asc;_;;
 
 """ Public posts with .jpg image on 2024-06-01, newest updates first, limit 20 """
-posts visibility =public;image_url ~".jpg";created_at=2024-06-01;updated_at :des;_;%m;lim 20;;
+posts visibility =public;image_url ~".jpg";created_at 2024-06-01;updated_at :des;_;%m;lim 20;;
 
 """ Followers of alex on 2025-01-15, follower id ascending """
-users username "alex";id _;follows followee_id @;created_at=2025-01-15;follower_id :asc;_;;
+users username "alex";id _;follows followee_id @;created_at 2025-01-15;follower_id :asc;_;;
 
 """ Comments with 'thanks' on mia's posts from 2025-02-01 to 2025-02-28, newest first """
 users username "mia";id _;posts user_id @;id _;comments post_id @;body ~"thanks";created_at :des>=2025-02-01;<=2025-02-28;_;;
@@ -164,7 +164,7 @@ messages body ~"invoice";read_flag !=true;created_at >2024-03-01;sender_id :asc;
 users email ~"@gmail.com";username :asc;id _;profiles user_id @;updated_at >2025-01-01;;
 
 """ Posts liked by followers of carol on 2024-06-01, order by post id asc """
-users username "carol";id _;follows followee_id @;follower_id _;likes user_id @;created_at=2024-06-01;post_id _;posts id @;id :asc;_;;
+users username "carol";id _;follows followee_id @;follower_id _;likes user_id @;created_at 2024-06-01;post_id _;posts id @;id :asc;_;;
 
 """ Public posts mentioning 'release' updated no later than 2025-10-01, created time ascending, top 12 """
 posts visibility =public;body ~"release";updated_at <=2025-10-01;created_at :asc;_;%m;lim 12;;
@@ -182,7 +182,7 @@ comments id 9000;comments parent_comment_id @;created_at >=2025-01-01;user_id _;
 messages sender_id 120;recipient_id 300,301;read_flag !=true;created_at :asc>=2024-04-01;<=2024-04-30;_;%m;lim 25;;
 
 """ Users created on 2024-07-01 without @spam.org in email, id descending, offset 40 limit 20 """
-users created_at=2024-07-01;email !~"@spam.org";id :des;_;%m;lim 20;%m;beg 40;;
+users created_at 2024-07-01;email !~"@spam.org";id :des;_;%m;lim 20;%m;beg 40;;
 
 """ Posts by Berlin users after 2025-01-01 with .png images, newest first """
 profiles location "Berlin";user_id _;users id @;posts user_id @;image_url ~".png";created_at :des>2025-01-01;_;;
@@ -191,7 +191,7 @@ profiles location "Berlin";user_id _;users id @;posts user_id @;image_url ~".png
 posts body _;id :cnt:des>=100;visibility :grp;;
 
 """ Authors of posts liked on 2025-12-25, usernames ascending """
-likes created_at=2025-12-25;post_id _;posts id @;user_id _;users id @;username :asc;_;;
+likes created_at 2025-12-25;post_id _;posts id @;user_id _;users id @;username :asc;_;;
 
 """ Message counts by sender to mia during 2025-03-01 to 2025-03-31, high to low """
 users username "mia";id _;messages recipient_id @;created_at >=2025-03-01;<=2025-03-31;sender_id :grp;id :cnt:des;;
@@ -209,13 +209,13 @@ users id >=100;<=200;email ~".com";updated_at :des;_;;
 comments id :cnt;user_id :grp:asc;posts user_id @;posts created_at :max;;
 
 """ Profiles of followers of nora on 2025-01-05, full_name ascending """
-users username "nora";id _;follows followee_id @;created_at=2025-01-05;follower_id _;profiles user_id @;full_name :asc;_;;
+users username "nora";id _;follows followee_id @;created_at 2025-01-05;follower_id _;profiles user_id @;full_name :asc;_;;
 
 """ Newest public posts with .png liked by kai since 2025-02-01, limit 10 """
 users username "kai";id _;likes user_id @;created_at >=2025-02-01;post_id _;posts id @;visibility =public;image_url ~".png";created_at :des;_;%m;lim 10;;
 
 """ Usernames who commented on ivy posts on 2025-06-15 """
-users username "ivy";id _;posts user_id @;id _;comments post_id @;created_at=2025-06-15;user_id _;users id @;username _;;
+users username "ivy";id _;posts user_id @;id _;comments post_id @;created_at 2025-06-15;user_id _;users id @;username _;;
 
 """ Recipients messaged by omar after 2025-04-01, sorted by message count desc """
 users username "omar";id _;messages sender_id @;created_at >2025-04-01;recipient_id :grp;id :cnt:des;;

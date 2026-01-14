@@ -48,7 +48,7 @@ posts body !="hello world";_;;
 posts image_url ~"http";_;;
 
 """ Image URL equals "https://img.com/p1.jpg" """
-posts image_url "https:"""img.com/p1.jpg";_;; """
+posts image_url "https://img.com/p1.jpg";_;;
 
 """ Image URL not "thumbnail" """
 posts image_url !="thumbnail";_;;
@@ -108,10 +108,10 @@ posts body "Hello","Hi";_;;
 posts body !="Draft","WIP";_;;
 
 """ Image URLs "https://a.co/p1" or "https://b.co/p2" """
-posts image_url "https:"""a.co/p1","https://b.co/p2";_;; """
+posts image_url "https://a.co/p1","https://b.co/p2";_;;
 
 """ Image URLs not "http://x/a" or "http://y/b" """
-posts image_url !="http:"""x/a","http://y/b";_;; """
+posts image_url !="http://x/a","http://y/b";_;;
 
 """ Image URLs containing ".png" or ".jpg" """
 posts image_url ~".png",".jpg";_;;
@@ -243,10 +243,10 @@ profiles location "Austin";_;;
 profiles location !="Nowhere";_;;
 
 """ profiles website contains https:// """
-profiles website ~"https:"""";_;; """
+profiles website ~"https://";_;;
 
 """ profiles website equals "https://example.com" """
-profiles website "https:"""example.com";_;; """
+profiles website "https://example.com";_;;
 
 """ profiles website not containing old """
 profiles website !~"old";_;;
@@ -255,7 +255,7 @@ profiles website !~"old";_;;
 profiles avatar_url ~".png";_;;
 
 """ profiles avatar url equals "https://img.example/a1.png" """
-profiles avatar_url "https:"""img.example/a1.png";_;; """
+profiles avatar_url "https://img.example/a1.png";_;;
 
 """ profiles avatar url not containing old """
 profiles avatar_url !~"old";_;;
@@ -354,7 +354,7 @@ posts body !="hello world";_;;
 posts image_url ~"http";_;;
 
 """ image url equals "https://img.com/p1.jpg" """
-posts image_url "https:"""img.com/p1.jpg";_;; """
+posts image_url "https://img.com/p1.jpg";_;;
 
 """ image url not containing thumbnail """
 posts image_url !~"thumbnail";_;;

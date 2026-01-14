@@ -215,22 +215,22 @@ profiles location "Austin";_;;
 profiles location !="Nowhere";_;;
 
 """ Website contains "https://" """
-profiles website ~"https:"""";_;; """
+profiles website ~"https://";_;;
 
 """ Website equals "https://example.com" """
-profiles website "https:"""example.com";_;; """
+profiles website "https://example.com";_;;
 
 """ Website not "http://old.example" """
-profiles website !="http:"""old.example";_;; """
+profiles website !="http://old.example";_;;
 
 """ Avatar URL contains ".png" """
 profiles avatar_url ~".png";_;;
 
 """ Avatar URL equals "https://img.example/a1.png" """
-profiles avatar_url "https:"""img.example/a1.png";_;; """
+profiles avatar_url "https://img.example/a1.png";_;;
 
 """ Avatar URL not "http://cdn.example/old.jpg" """
-profiles avatar_url !="http:"""cdn.example/old.jpg";_;; """
+profiles avatar_url !="http://cdn.example/old.jpg";_;;
 
 """ Birthday on 1990-05-15 """
 profiles birthday 1990-05-15;_;;
@@ -305,19 +305,19 @@ profiles location !="Nowhere","Somewhere";_;;
 profiles location ~"San","Port";_;;
 
 """ Websites "https://a.co" or "https://b.io" """
-profiles website "https:"""a.co","https://b.io";_;; """
+profiles website "https://a.co","https://b.io";_;;
 
 """ Websites not "http://x" or "http://y" """
-profiles website !="http:"""x","http://y";_;; """
+profiles website !="http://x","http://y";_;;
 
 """ Websites containing ".org" or ".net" """
 profiles website ~".org",".net";_;;
 
 """ Avatar URLs "https://img/a.png" or "https://img/b.jpg" """
-profiles avatar_url "https:"""img/a.png","https://img/b.jpg";_;; """
+profiles avatar_url "https://img/a.png","https://img/b.jpg";_;;
 
 """ Avatar URLs not "http://old/a" or "http://old/b" """
-profiles avatar_url !="http:"""old/a","http://old/b";_;; """
+profiles avatar_url !="http://old/a","http://old/b";_;;
 
 """ Avatar URLs containing ".jpg" or ".webp" """
 profiles avatar_url ~".jpg",".webp";_;;

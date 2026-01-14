@@ -3,7 +3,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from openai import OpenAI
-from memelang import MemePGSQL
+from memelang import Grid
 
 iterations = 4
 experit = 30
@@ -20,7 +20,7 @@ def inc():
 	return f'{n+1:03d}'
 
 def normalize(raw: str):
-	return str(MemePGSQL(raw)).replace('; ',';')
+	return str(Grid(raw)).replace('; ',';')
 
 if __name__ == "__main__":
 	group = sys.argv[1]

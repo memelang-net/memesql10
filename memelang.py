@@ -244,7 +244,7 @@ class Axis(list):
 	@property
 	def regex(self) -> Pattern[str]:
 		return re.compile(rf'''
-		(?P<COMM>"""(?:[^"\\\n\r]|\\.)*""")|
+		(?P<COMM>"""(?:(?!""")[^\n\r\\]|\\.)*""")|
 		(?P<EXPQ>"(?:[^"\\\n\r]|\\.)*")|
 		(?P<SEP>{self.sepreg})|
 		(?P<EXPM>[^"{re.escape(self.sep[0])}]+)|
@@ -267,7 +267,7 @@ class Axis(list):
 				self.append(self.sub("".join(exprs)))
 				exprs.clear()
 
-		# debuffer sub-axis
+		# debuffer expression
 		if exprs: self.append(self.sub("".join(exprs)))
 
 		# rectangularization
@@ -506,7 +506,6 @@ class Grid(Axis2):
 if __name__ == "__main__":
 	if len(sys.argv)>1: lines=[' '.join(sys.argv[1:])]
 	else: lines = examples.splitlines()
-
 	if lines:
 		for i in range(len(lines)):
 			if lines[i].startswith('"""'):

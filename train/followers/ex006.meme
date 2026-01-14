@@ -2,13 +2,13 @@
 users username "mira";id _;follows follower_id @;followee_id _;profiles user_id @;_;;
 
 """ Usernames who liked posts by "alex" on 2025-01-01 """
-users username "alex";id _;posts user_id @;id _;likes post_id @;created_at=2025-01-01;user_id _;users id @;username _;;
+users username "alex";id _;posts user_id @;id _;likes post_id @;created_at 2025-01-01;user_id _;users id @;username _;;
 
 """ Comment texts on posts by "sara" since 2025-07-01 """
 users username "sara";id _;posts user_id @;id _;comments post_id @;created_at >=2025-07-01;body _;;
 
 """ Message bodies sent by users followed by "ava" on 2025-06-01 """
-users username "ava";id _;follows follower_id @;followee_id _;messages sender_id @;created_at=2025-06-01;body _;;
+users username "ava";id _;follows follower_id @;followee_id _;messages sender_id @;created_at 2025-06-01;body _;;
 
 """ Avatars of authors of comments on post 101 """
 posts id 101;comments post_id @;user_id _;users id @;id _;profiles user_id @;avatar_url _;;
@@ -17,7 +17,7 @@ posts id 101;comments post_id @;user_id _;users id @;id _;profiles user_id @;ava
 comments id 880100;comments parent_comment_id @;user_id _;users id @;username _;;
 
 """ Images in posts liked by "liam" during 2024-12-01 """
-users username "liam";id _;likes user_id @;created_at=2024-12-01;post_id _;posts id @;image_url _;;
+users username "liam";id _;likes user_id @;created_at 2024-12-01;post_id _;posts id @;image_url _;;
 
 """ Bios for followers of "sophia" """
 users username "sophia";id _;follows followee_id @;follower_id _;users id @;profiles user_id @;bio _;;
@@ -26,7 +26,7 @@ users username "sophia";id _;follows followee_id @;follower_id _;users id @;prof
 users username "james";id _;comments user_id @;created_at >=2025-01-01;<=2025-12-31;post_id _;posts id @;body _;;
 
 """ Users who messaged "emily" on 2025-03-10 """
-users username "emily";id _;messages recipient_id @;created_at=2025-03-10;sender_id _;users id @;username _;;
+users username "emily";id _;messages recipient_id @;created_at 2025-03-10;sender_id _;users id @;username _;;
 
 """ Websites of people who like "oliver" posts """
 users username "oliver";id _;posts user_id @;id _;likes post_id @;user_id _;users id @;id _;profiles user_id @;website _;;
@@ -56,7 +56,7 @@ users id 42;follows followee_id @;follower_id _;profiles user_id @;avatar_url _;
 comments id 7300;comments parent_comment_id @;id _;comments parent_comment_id @;body _;;
 
 """ Authors of posts liked on 2025-02-14 """
-likes created_at=2025-02-14;post_id _;posts id @;user_id _;users id @;username _;;
+likes created_at 2025-02-14;post_id _;posts id @;user_id _;users id @;username _;;
 
 """ Like counts per post for "mira" since 2025-01-01, high to low """
 users username "mira";id _;posts user_id @;id :grp;likes post_id @;created_at >=2025-01-01;id :cnt:des;;
@@ -194,7 +194,7 @@ users username "bob";id _;posts user_id @;id _;likes post_id @;created_at 2024-0
 users email ~"@gmail.com";id >=100;<=500;username :asc;_;;
 
 """ Profiles in Austin whose bio mentions engineer and website includes https, newest updated first, cap 15 """
-profiles location "Austin";bio ~"engineer";website ~"https:"""";updated_at :des;_;%m;lim 15;; """
+profiles location "Austin";bio ~"engineer";website ~"https://";updated_at :des;_;%m;lim 15;;
 
 """ Profiles with birthdays after 1985-01-01 and before 2000-12-31, names containing Smith, sort full_name ascending """
 profiles birthday >1985-01-01;<=2000-12-31;full_name :asc~"Smith";_;;
@@ -266,7 +266,7 @@ messages body ~"invoice";read_flag !=true;created_at :des>=2024-03-01;<=2024-12-
 users username :asc!="admin","root";email ~".org";updated_at >=2024-01-01;<=2024-12-31;_;;
 
 """ Profiles with photography-like bios and https sites updated on or after 2024-05-01, newest first, limit 25 """
-profiles bio <=>"photography"<=0.70;website ~"https:"""";updated_at :des>=2024-05-01;_;%m;lim 25;; """
+profiles bio <=>"photography"<=0.70;website ~"https://";updated_at :des>=2024-05-01;_;%m;lim 25;;
 
 """ Comments from user ids 5 to 1000 containing thanks, id ascending """
 comments user_id >=5;<=1000;body ~"thanks";id :asc;_;;
@@ -290,7 +290,7 @@ posts visibility =public;body !~"draft";id >=500;created_at :des;_;%m;lim 5;;
 users password_hash ~"abc";email !="root@sys","admin@sys";created_at >2024-01-15;id :asc;_;;
 
 """ Profiles with png or jpg avatars and sites not old URLs, created 2024-01-01 to 2025-01-01, updated descending """
-profiles avatar_url ~".png",".jpg";website !="http:"""old/a","http://old/b";created_at >=2024-01-01;<=2025-01-01;updated_at :des;_;; """
+profiles avatar_url ~".png",".jpg";website !="http://old/a","http://old/b";created_at >=2024-01-01;<=2025-01-01;updated_at :des;_;;
 
 """ Read messages about meeting for recipients 1000 or higher, oldest first, limit 10 """
 messages body ~"meeting";recipient_id >=1000;read_flag =true;created_at :asc;_;%m;lim 10;;

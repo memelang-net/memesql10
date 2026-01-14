@@ -143,7 +143,7 @@ comments id :cnt;post_id :grp>=100;;
 likes id :cnt;post_id :grp<=1000;;
 
 """ follows count grouped by follower ids not 10 """
-follows id:cnt;follower_id :grp!=10;;
+follows id :cnt;follower_id :grp!=10;;
 
 """ messages grouped by recipient id at least 100 """
 messages id :cnt;recipient_id :grp>=100;;
@@ -167,7 +167,7 @@ posts id :cnt>=1000;visibility :grp;;
 comments id :min>=100000;post_id :grp;;
 
 """ likes by post with maximum id at most 5000 """
-likes id:max<=5000;post_id :grp;;
+likes id :max<=5000;post_id :grp;;
 
 """ follows by follower, keep groups with count at least 100 """
 follows id :cnt>=100;follower_id :grp;;
@@ -221,10 +221,10 @@ posts id :cnt:des>=1000;visibility :grp;;
 comments body _;id :min:asc>=10;post_id :grp;;
 
 """ likes by post, sort maxima descending, keep at most 5000 """
-likes id:max:des<=5000;post_id :grp;;
+likes id :max:des<=5000;post_id :grp;;
 
 """ follows by follower, sort ascending, keep at least 100 """
-follows id:cnt:asc>=100;follower_id :grp;;
+follows id :cnt:asc>=100;follower_id :grp;;
 
 """ messages by recipient, sort counts descending, keep at most 50 """
 messages id :cnt:des<=50;recipient_id :grp;;
