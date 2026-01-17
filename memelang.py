@@ -6,12 +6,12 @@ Whitespaces are syntactic and trigger "new Cell"
 Never space between operator/comparator/comma/flag and values
 '''
 
-MEMELANG_VER = 10.09
+MEMELANG_VER = 10.10
 
 syntax = '[table WS] [column WS] ["<=>" "\"" string "\""] [":" "$" var][":" ("min"|"max"|"cnt"|"sum"|"avg"|"last"|"grp")][":" ("asc"|"des")] [("="|"!="|">"|"<"|">="|"<="|"~"|"!~") (string|int|float|("$" var)|"@"|"_")] ";"'
 
 examples = '''
-%tab;;
+% mode tab;
 roles id :TYP=INT;>0;rating :DESC="Decimal 0-5 star rating of performance";:TYP=DEC;>0;<=5;actor :DESC="Actor's full name";:TYP=STR;movie :DESC="Movie's full name";:TYP=STR;character :DESC="Character's full name";:TYP=STR;;
 actors id :TYP=INT;>0;name :DESC="Actor's full name";:TYP=STR;age :DESC="Actor's age in years";:TYP=INT;>=0;<200;;
 movies id :TYP=INT;>0;description :DESC="Brief description of movie plot";:TYP=STR;year :DESC="Year of production AD";:TYP=INT;>1800;<2100;genre scifi,drama,comedy,documentary;:TYP=STR;title :DESC="Full movie title";:TYP=STR;;
@@ -22,14 +22,11 @@ roles movie :grp;actor :grp;character :grp:cnt=1;;
 actors id :grp:cnt=1;;
 movies id :grp:cnt=1;;
 
-%qry;;
+% mode qry;
 """ All movies """
 movies _ _;;
 
-""" Every film """
-movies _ _;;
-
-""" Roles """
+""" Every role """
 roles _ _;;
 
 """ Titles and descriptions for movies """
@@ -75,7 +72,7 @@ movies description <=>"robot"<=$sim;title _;roles movie @;rating >=3;;
 roles actor :$a~"Bruce Willis","Uma Thurman";movie _;@ @ @;actor !$a;;
 
 """ War stories before 1980: top 12 movies by minimum role rating """
-movies year <1980;description <=>"war"<=$sim;title :grp;roles movie @;rating :min:des;%m;beg 0;lim 12;;
+movies year <1980;description <=>"war"<=$sim;title :grp;roles movie @;rating :min:des;% beg 0;% lim 12;;
 
 """ Roles for movies Hero or House of Flying Daggers where actor name includes Li, actor A-Z """
 movies title "Hero","House of Flying Daggers";roles movie @;actor :asc~"Li";;
@@ -108,6 +105,7 @@ CELL_PATTERN = (
 	('DAT_WLD', r'_'),
 	('DAT_MS',  r'\^'),
 	('DAT_AT',  r'@'),
+	('DAT_MET', r'%'),
 	('DAT_TS',  r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}'),
 	('DAT_YMD',	r'\d{4}-\d{2}-\d{2}'),
 	('DAT_DEC',	r'-?\d*\.\d+'),
@@ -227,7 +225,6 @@ class Cell:
 ### GRAMMAR ###
 
 class Axis(list):
-	mode: str = None
 	sep: str = None			# SEPERATOR TOKEN
 	sepreg: str = None		# SEPERATOR REG EXP
 	sepstr: str = None		# SEPERATOR OUT
@@ -252,11 +249,6 @@ class Axis(list):
 		''', re.VERBOSE)
 
 	def parse(self, src: str):
-
-		if src[:1]=='%' and re.fullmatch('%[A-Za-z]+\s*', src):
-			self.mode=src
-			return
-
 		exprs: List[str] = []
 
 		for m in self.regex.finditer(src):
@@ -274,7 +266,6 @@ class Axis(list):
 		if self.minlen: self[:0] = [self.sub('') for _ in range(self.minlen-len(self))]
 
 	def __str__(self) -> str:
-		if self.mode: return self.mode
 		items = [str(t) for t in self]
 		return self.sepstr.join([s for s in items if (s or self.empt)])
 
@@ -330,7 +321,7 @@ class Grid(Axis2):
 		flag2sql = {':cnt':'COUNT',':sum': 'SUM', ':avg': 'AVG', ':min': 'MIN', ':max': 'MAX', ':last': 'MAX'}
 		cmp2sql = {'EQL':'=','NOT':'!=','GT':'>','GE':'>=','LT':'<','LE':'<=','SIM':'ILIKE','DSIM':'NOT ILIKE'}
 		mod2sql = {'MOD_COS': '<=>','MOD_L2': '<->','MOD_IP': '<#>'}
-		modes = ['%q','%qry']
+		bind = {'lim':0,'beg':0,'sim':0.5,'mode':'qry'}
 
 		def deref(cell: Cell) -> Iterator[SQL]:
 			for t in cell.right:
@@ -345,13 +336,6 @@ class Grid(Axis2):
 				yield SQL(val) if isinstance(val, Alias) else SQL(PH, [val])
 
 		for axis1 in self:
-			modes[0]='%q'
-			if axis1.mode:
-				modes[1]=axis1.mode
-				continue
-			if modes[1]!='%qry': continue
-
-			bind = {'lim':0,'beg':0,'sim':0.5}
 			mem = [{'val':None,'alias':None,'cnt':-1} for _ in range(3)]
 			query = {'select':[],'from':[],'groupby':[],'where':[],'having':[],'orderby':[]}
 			GROUPED = False
@@ -359,13 +343,13 @@ class Grid(Axis2):
 
 			for axis0 in axis1:
 
-				if axis0.mode: modes[0]=axis0.mode
-				if not axis0: continue
-
 				axis0str = [str(cell.single.dat) for cell in axis0]
 
-				if modes[0]=='%m': bind[axis0str[COL]]=axis0[VAL].single.dat
-				if modes[0]!='%q': continue
+				if axis0str[TAB]=='%':
+					bind[axis0str[COL]]=axis0[VAL].single.dat
+					if bind[axis0str[COL]] == '': raise Err('E_MET_VAL')
+					continue
+				if bind['mode']!='qry': continue
 
 				if axis0str == ['','','_']:
 					ALLSELECTED=True

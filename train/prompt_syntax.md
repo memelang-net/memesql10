@@ -36,4 +36,4 @@ MEMELANG:
 	* Only followed by `>=MIN` when NOT ordering by similarity, default `>=$sim` is populated by compiler
 	* Query may explicitly specify a numeric `>[=]MIN`
 	* Query may specify both `:des` and `>=MIN`
-* `%m;lim X;beg Y` triggers pagination
+* `% lim X;% beg Y` triggers pagination

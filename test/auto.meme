@@ -3,8 +3,8 @@ movies year >=2012;<=2014;title _;roles movie @;actor ~"Anna";;
 movies year >=2012;<=2014;title _;roles movie @;actor ~"Anna";;
 
 """ Comedies in 1995 ranked by highest average role rating (top 3) """
-movies genre comedy;year 1995;title :grp;roles movie @;rating :avg:des;%m;lim 3;;
-movies genre comedy;year 1995;title :grp;roles movie @;rating :avg:des;%m;lim 3;;
+movies genre comedy;year 1995;title :grp;roles movie @;rating :avg:des;% lim 3;;
+movies genre comedy;year 1995;title :grp;roles movie @;rating :avg:des;% lim 3;;
 
 """ Actors with 4 to 9 roles inclusive, alphabetical """
 roles actor :grp:asc;id :cnt>=4;:cnt<=9;;
@@ -23,8 +23,8 @@ movies year 2012;description ~"ocean";title :des;_;;
 movies year 2012;description ~"ocean";title :des;_;;
 
 """ Top 5 actors by minimum rating in robot-themed films """
-movies description <=>"robot"<=$sim;title _;roles movie @;actor :grp;rating :min:des;%m;lim 5;;
-movies description <=>"robot"<=$sim;title _;roles movie @;rating :min:des;actor :grp;%m;lim 5;;
+movies description <=>"robot"<=$sim;title _;roles movie @;actor :grp;rating :min:des;% lim 5;;
+movies description <=>"robot"<=$sim;title _;roles movie @;rating :min:des;actor :grp;% lim 5;;
 
 """ Roles in Alien or Aliens where actor name equals the movie title """
 roles movie "Alien","Aliens";actor @;;
@@ -35,16 +35,16 @@ movies genre documentary;year 2010;title _;roles movie @;id :cnt:des;actor :grp;
 movies genre documentary;year 2010;title _;roles movie @;id :cnt:des;actor :grp;;
 
 """ Space exploration movies from 2000 and later: largest casts first, top 10 """
-movies year >=2000;description <=>"space exploration"<=$sim;title :grp;roles movie @;id :cnt:des;%m;lim 10;;
-movies year >=2000;description <=>"space exploration"<=$sim;title :grp;roles movie @;id :cnt:des;%m;lim 10;;
+movies year >=2000;description <=>"space exploration"<=$sim;title :grp;roles movie @;id :cnt:des;% lim 10;;
+movies year >=2000;description <=>"space exploration"<=$sim;title :grp;roles movie @;id :cnt:des;% lim 10;;
 
 """ Dramas from 1980 to 1989 ordered by title A-Z """
 movies year >=1980;<=1989;genre drama;title :asc;_;;
 movies genre drama;year >=1980;<=1989;title :asc;_;;
 
 """ Actors with most roles in 1999, top 7 """
-movies year 1999;title _;roles movie @;actor :grp;id :cnt:des;%m;lim 7;;
-movies year 1999;title _;roles movie @;id :cnt:des;actor :grp;%m;lim 7;;
+movies year 1999;title _;roles movie @;actor :grp;id :cnt:des;% lim 7;;
+movies year 1999;title _;roles movie @;id :cnt:des;actor :grp;% lim 7;;
 
 """ Average role rating per movie in 2001, high to low """
 movies year 2001;title :grp;roles movie @;rating :avg:des;;
@@ -59,8 +59,8 @@ movies year 1985;title _;actors name @;_;;
 movies year 1985;title :$x;actors name $x;;
 
 """ Space-themed films in 2016 ranked by max role rating, top 5 """
-movies year 2016;description <=>"space"<=$sim;title :grp;roles movie @;rating :max:des;%m;lim 5;;
-movies year 2016;description <=>"space exploration"<=$sim;title :grp;roles movie @;rating :max:des;%m;lim 5;;
+movies year 2016;description <=>"space"<=$sim;title :grp;roles movie @;rating :max:des;% lim 5;;
+movies year 2016;description <=>"space exploration"<=$sim;title :grp;roles movie @;rating :max:des;% lim 5;;
 
 """ Actors aged 30 to 50 with average role rating at least 4.5 """
 roles actor :grp;actors name @;age >=30;<=50;rating :avg>=4.5;;
@@ -79,12 +79,12 @@ movies year 1994;title :grp;roles movie @;id :cnt:asc;;
 movies year 1994;title :grp;roles movie @;id :cnt:asc;;
 
 """ Sci-fi releases from 1980 through 1999 mentioning robot or android; list co-stars of people named like Mark with strictly higher role ratings (A-Z), cap 12 """
-movies genre scifi;year >=1980;<=1999;description ~"robot","android";title _;roles movie @;actor :$a~"Mark";rating :$r=_;movie _;@ @ @;actor :asc=!$a;rating >$r;%m;lim 12;;
-movies genre scifi;year >=1980;<=1999;description ~"robot","android";title _;roles movie @;actor :$x~"Mark";rating :$y;movie _;@ @ @;actor !=$x;rating >$y;%m;lim 12;;
+movies genre scifi;year >=1980;<=1999;description ~"robot","android";title _;roles movie @;actor :$a~"Mark";rating :$r=_;movie _;@ @ @;actor :asc=!$a;rating >$r;% lim 12;;
+movies genre scifi;year >=1980;<=1999;description ~"robot","android";title _;roles movie @;actor :$x~"Mark";rating :$y;movie _;@ @ @;actor !=$x;rating >$y;% lim 12;;
 
 """ Films from 2000 and later with the strongest average role ratings and largest casts, show by movie (both metrics descending, top 10) """
-movies year >=2000;title :grp;roles movie @;rating :avg:des;id :cnt:des;%m;lim 10;;
-movies year >=2000;title :grp;roles movie @;rating :avg:des;id :cnt:des;%m;lim 10;;
+movies year >=2000;title :grp;roles movie @;rating :avg:des;id :cnt:des;% lim 10;;
+movies year >=2000;title :grp;roles movie @;rating :avg:des;id :cnt:des;% lim 10;;
 
 """ Actors whose name includes Ann and age between 25 and 60 appearing in politically intriguing films, most relevant first """
 actors name ~"Ann";age >=25;<=60;roles actor @;movie _;movies title @;description <=>"political intrigue":des;_;;
@@ -95,20 +95,20 @@ movies year >1995;title :grp;roles movie @;id :cnt>=5;:cnt<=12;rating :avg>=3.5;
 movies year >1995;title :grp;roles movie @;id :cnt>=5;:cnt<=12;rating :avg>=3.5;:max:des;;
 
 """ Drama titles since 2000 about artificial intelligence, newest releases first, page 3 with 30 per page """
-movies genre drama;year :des>=2000;description <=>"artificial intelligence"<=$sim;_;%m;lim 30;beg 60;;
-movies genre drama;year :des>=2000;description ~"artificial intelligence";title _;%m;lim 30;beg 60;;
+movies genre drama;year :des>=2000;description <=>"artificial intelligence"<=$sim;_;% lim 30;% beg 60;;
+movies genre drama;year :des>=2000;description ~"artificial intelligence";title _;% lim 30;% beg 60;;
 
 """ Youngest five co-stars who appeared with Harrison Ford in films released before 1990 """
-roles actor :$a~"Harrison Ford";movie _;movies title @;year <1990;title _;roles movie @;actor !$a;actors name @;age :asc;%m;lim 5;;
-movies year <1990;title _;roles movie @;actor :$x~"Harrison Ford";movie _;@ @ @;actor !=$x;actors name @;age :asc;%m;lim 5;;
+roles actor :$a~"Harrison Ford";movie _;movies title @;year <1990;title _;roles movie @;actor !$a;actors name @;age :asc;% lim 5;;
+movies year <1990;title _;roles movie @;actor :$x~"Harrison Ford";movie _;@ @ @;actor !=$x;actors name @;age :asc;% lim 5;;
 
 """ People whose name exactly matches a movie title and whose roles from 2010 to 2015 average at least 3, ordered by that average descending """
 actors name :$x:grp;movies title $x;roles actor $x;rating :avg:des>=3;movie _;movies title @;year >=2010;<=2015;;
 actors name :$x:grp;movies title $x;roles actor $x;rating :avg:des>=3;movie _;movies title @;year >=2010;<=2015;;
 
 """ Space exploration films from 1960–1975 ranked by cast size, tie-break by highest role rating then title A-Z (top 10) """
-movies description <=>"space exploration"<=$sim;year >=1960;<=1975;title :grp;roles movie @;id :cnt:des;rating :max:des;movie :asc;%m;lim 10;;
-movies description <=>"space exploration"<=$sim;year >=1960;<=1975;title :grp;roles movie @;id :cnt:des;rating :max;title :asc;%m;lim 10;;
+movies description <=>"space exploration"<=$sim;year >=1960;<=1975;title :grp;roles movie @;id :cnt:des;rating :max:des;movie :asc;% lim 10;;
+movies description <=>"space exploration"<=$sim;year >=1960;<=1975;title :grp;roles movie @;id :cnt:des;rating :max;title :asc;% lim 10;;
 
 """ Comedies after 2000 where a role rating is at least 3.5 performed by actors under 18; list movie titles with actor names """
 movies genre comedy;year >2000;title _;roles movie @;rating >=3.5;actor _;actors name @;age <18;_;;
@@ -127,8 +127,8 @@ employees manager_id :grp;id :cnt:des>=5;employees id @;first_name _;last_name _
 employees id :cnt:des>=5;manager_id :grp;employees id @;first_name _;last_name _;;
 
 """ Top 12 net pay results in payroll run 2002 with employee names """
-payroll_runs id 2002;id _;payroll_entries payroll_run_id @;net_pay :des;employee_id _;employees id @;_;%m;lim 12;;
-payroll_entries payroll_run_id 2002;net_pay :des;employee_id _;employees id @;first_name _;last_name _;%m;lim 12;;
+payroll_runs id 2002;id _;payroll_entries payroll_run_id @;net_pay :des;employee_id _;employees id @;_;% lim 12;;
+payroll_entries payroll_run_id 2002;net_pay :des;employee_id _;employees id @;first_name _;last_name _;% lim 12;;
 
 """ Reviews since 2024-01-01 most similar to mentorship with rating 4 or higher """
 performance_reviews review_date >=2024-01-01;rating >=4;comments <=>"mentorship":des;_;;
@@ -151,8 +151,8 @@ jobs grade :grp;min_salary :avg:des>=70000;;
 jobs min_salary :avg:des>=70000;grade :grp;;
 
 """ Employees in departments located in US-NY ordered by hire_date desc, page 2 of 20 """
-locations country "US";region "NY";id _;departments location_id @;id _;employees department_id @;hire_date :des;_;%m;lim 20;beg 20;;
-locations country "US";region "NY";id _;departments location_id @;id _;employees department_id @;hire_date :des;_;%m;lim 20;beg 20;;
+locations country "US";region "NY";id _;departments location_id @;id _;employees department_id @;hire_date :des;_;% lim 20;% beg 20;;
+locations country "US";region "NY";id _;departments location_id @;id _;employees department_id @;hire_date :des;_;% lim 20;% beg 20;;
 
 """ Employees with expert Data skills last used in 2024, sort last name A-Z """
 skills category "Data";id _;employee_skills skill_id @;level expert;last_used >=2024-01-01;<=2024-12-31;employee_id _;employees id @;last_name :asc;;
@@ -183,8 +183,8 @@ timesheets submitted 1;employee_id :grp;week_start :last;employees id @;last_nam
 timesheets submitted 1;week_start :max;employee_id :grp;employees id @;first_name _;last_name _;;
 
 """ Non-terminated employees with salary 60000..150000, order by salary desc then hire_date asc, limit 50 offset 50 """
-employees status !=terminated;salary :des>=60000;<=150000;hire_date :asc;_;%m;lim 50;beg 50;;
-employees status !=terminated;salary :des>=60000;<=150000;hire_date :asc;_;%m;lim 50;beg 50;;
+employees status !=terminated;salary :des>=60000;<=150000;hire_date :asc;_;% lim 50;% beg 50;;
+employees status !=terminated;salary :des>=60000;<=150000;hire_date :asc;_;% lim 50;% beg 50;;
 
 """ Approved parental leave in Q1 2025 with hours >= 40 and employee names, hours desc """
 time_off_requests type parental;status approved;start_date >=2025-01-01;<=2025-03-31;hours :des>=40;employee_id _;employees id @;first_name _;last_name _;;
