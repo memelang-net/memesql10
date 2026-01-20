@@ -1,12 +1,12 @@
 '''
 info@memelang.net | (c)2026 HOLTWORK LLC | Patents Pending
-This script parses MEMELANG, a terse query DSL with axial grammar
+This script parses MEMELANG, a terse query DSL with grid grammar
 Grid(Axis2) -> Axis1 -> Axis0 -> Cell
 Whitespaces are syntactic and trigger "new Cell"
 Never space between operator/comparator/comma/flag and values
 '''
 
-MEMELANG_VER = 10.10
+MEMELANG_VER = 10.11
 
 syntax = '[table WS] [column WS] ["<=>" "\"" string "\""] [":" "$" var][":" ("min"|"max"|"cnt"|"sum"|"avg"|"last"|"grp")][":" ("asc"|"des")] [("="|"!="|">"|"<"|">="|"<="|"~"|"!~") (string|int|float|("$" var)|"@"|"_")] ";"'
 
@@ -105,7 +105,7 @@ CELL_PATTERN = (
 	('DAT_WLD', r'_'),
 	('DAT_MS',  r'\^'),
 	('DAT_AT',  r'@'),
-	('DAT_MET', r'%'),
+	('DAT_ENV', r'%'),
 	('DAT_TS',  r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}'),
 	('DAT_YMD',	r'\d{4}-\d{2}-\d{2}'),
 	('DAT_DEC',	r'-?\d*\.\d+'),
@@ -321,7 +321,7 @@ class Grid(Axis2):
 		flag2sql = {':cnt':'COUNT',':sum': 'SUM', ':avg': 'AVG', ':min': 'MIN', ':max': 'MAX', ':last': 'MAX'}
 		cmp2sql = {'EQL':'=','NOT':'!=','GT':'>','GE':'>=','LT':'<','LE':'<=','SIM':'ILIKE','DSIM':'NOT ILIKE'}
 		mod2sql = {'MOD_COS': '<=>','MOD_L2': '<->','MOD_IP': '<#>'}
-		bind = {'lim':0,'beg':0,'sim':0.5,'mode':'qry'}
+		env = {'mode':'qry','sim':0.5}
 
 		def deref(cell: Cell) -> Iterator[SQL]:
 			for t in cell.right:
@@ -329,13 +329,16 @@ class Grid(Axis2):
 				elif t.kind == 'DAT_AT': key='@'
 				else: key=None
 				if key:
-					if key not in bind: raise Err(f'E_VAR_BIND {key}')
-					val = bind[key]
+					if key in env: val = env[key]
+					elif key not in bind: raise Err(f'E_VAR_BIND {key}')
+					else: val = bind[key]
 				else: val = t.dat
 
 				yield SQL(val) if isinstance(val, Alias) else SQL(PH, [val])
 
 		for axis1 in self:
+			bind = {}
+			env['lim'], env['beg'] = 0, 0
 			mem = [{'val':None,'alias':None,'cnt':-1} for _ in range(3)]
 			query = {'select':[],'from':[],'groupby':[],'where':[],'having':[],'orderby':[]}
 			GROUPED = False
@@ -346,10 +349,11 @@ class Grid(Axis2):
 				axis0str = [str(cell.single.dat) for cell in axis0]
 
 				if axis0str[TAB]=='%':
-					bind[axis0str[COL]]=axis0[VAL].single.dat
-					if bind[axis0str[COL]] == '': raise Err('E_MET_VAL')
+					if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', axis0str[COL]): raise Err('E_ENV_COL')
+					env[axis0str[COL]]=axis0[VAL].single.dat
+					if env[axis0str[COL]] == '': raise Err('E_MET_VAL')
 					continue
-				if bind['mode']!='qry': continue
+				if env['mode']!='qry': continue
 
 				if axis0str == ['','','_']:
 					ALLSELECTED=True
@@ -447,7 +451,9 @@ class Grid(Axis2):
 				# bind
 				bind['@']=Alias(mem[VAL]['alias'])
 				for flag in axis0[VAL].flag:
-					if flag.kind=='BIND': bind[flag.lex[2:]]=Alias(mem[VAL]['alias'])
+					if flag.kind=='BIND': 
+						if flag.lex[2:] in env: raise Err('E_BIND_ENV')
+						bind[flag.lex[2:]]=Alias(mem[VAL]['alias'])
 
 			if ALLSELECTED:
 				query['select']=[]
@@ -478,8 +484,8 @@ class Grid(Axis2):
 				sqlstr+=' '+keyword+' '+sep.join([s.lex for s in query[ikey]])
 				for s in query[ikey]: params.extend(s.param)
 
-			if bind['lim']: sqlstr += f" LIMIT {int(bind['lim'])}"
-			if bind['beg']: sqlstr += f" OFFSET {int(bind['beg'])}"
+			if env['lim']: sqlstr += f" LIMIT {int(env['lim'])}"
+			if env['beg']: sqlstr += f" OFFSET {int(env['beg'])}"
 
 			sql.append(SQL(sqlstr[1:], params))
 		return sql
