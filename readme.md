@@ -5,22 +5,32 @@ Memelang is a token-optimized query language that significantly reduces token co
 2. **memelang.py** expands Memelang to SQL
 3. Database executes SQL query
 
-The **/train/** folder contains example natural language to Memelang conversions for LLM training.
-
 
 ### Example
 
-This 22-token Memelang query:
+LLM converts the natural language query:
+
+```md
+Who has co-stared with Mark Hamill?
+```
+
+to this 22-token Memelang query:
 
 ```memelang 
 roles actor :$a="Mark Hamill"; movie *;@ @ @; actor !$a
 ```
 
-is expanded into a 50 token SQL query:
+which *memelang.py* expands to this 50-token SQL query:
 
 ```sql
 SELECT t0.actor, t0.movie, t1.movie, t1.actor FROM roles AS t0, roles AS t1 WHERE t0.actor = 'Mark Hamill' AND t1.id != t0.id AND t1.movie = t0.movie
 ```
+
+### Files
+
+* **memelang.py** main library for parsing and converting Memelang
+* **/train/** contains example natural language to Memelang conversions for LLM training.
+
 
 ### Links
 
