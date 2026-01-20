@@ -2,7 +2,7 @@
 
 Memelang is an AI-optimized query language that significantly reduces token count for LLM RAG pipelines:
 1. LLM emits low-token Memelang queries
-2. **memelang.py** expands Memelang to an SQL queries
+2. **memelang.py** expands Memelang to SQL queries
 3. Database executes SQL queries
 
 
@@ -36,7 +36,7 @@ SELECT t0.actor, t0.movie, t1.movie, t1.actor FROM roles AS t0, roles AS t1 WHER
 
 * Video: https://www.youtube.com/watch?v=25tJzR5pEd0
 * Paper: https://arxiv.org/abs/2512.17967
-* Patent Spec: https://patents.google.com/patent/US20250068615A1
+* Patent: https://patents.google.com/patent/US20250068615A1
 * Contact: info@memelang.net
 
 ### Legal
