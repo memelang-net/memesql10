@@ -1,8 +1,8 @@
-### About
+## Memelang v10
 
-Memelang is a token-optimized query language that significantly reduces token count and model size for LLM RAG. The pipeline is:
+Memelang is an AI-optimized query language that significantly reduces token count for LLM RAG pipelines:
 1. LLM emits low-token Memelang queries
-2. **memelang.py** expands Memelang to SQL
+2. **memelang.py** expands Memelang to an SQL query
 3. Database executes SQL query
 
 
@@ -11,25 +11,25 @@ Memelang is a token-optimized query language that significantly reduces token co
 LLM converts the natural language query:
 
 ```md
-Who has co-stared with Mark Hamill?
+Who has co-starred with Mark Hamill?
 ```
 
 to this 22-token Memelang query:
 
-```memelang 
+```memelang
 roles actor :$a="Mark Hamill"; movie *;@ @ @; actor !$a
 ```
 
-which *memelang.py* expands to this 50-token SQL query:
+which **memelang.py** expands to this 50-token SQL query:
 
 ```sql
-SELECT t0.actor, t0.movie, t1.movie, t1.actor FROM roles AS t0, roles AS t1 WHERE t0.actor = 'Mark Hamill' AND t1.id != t0.id AND t1.movie = t0.movie
+SELECT t0.actor, t0.movie, t1.movie, t1.actor FROM roles AS t0, roles AS t1 WHERE t0.actor = 'Mark Hamill' AND t1.actor != t0.actor AND t1.movie = t0.movie
 ```
 
 ### Files
 
 * **memelang.py** main library for parsing and converting Memelang
-* **/train/** contains example natural language to Memelang conversions for LLM training.
+* **train/** contains example natural language to Memelang conversions for LLM training.
 
 
 ### Links
