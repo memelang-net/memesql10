@@ -1,6 +1,10 @@
 ### About
 
-Memelang is an AI-optimized query language that significantly reduces token count and model size for LLM RAG. The code below is designed to be copy-and-pasted into your LLM.
+Memelang is an AI-optimized query language that significantly reduces token count and model size for LLM RAG.
+
+The **memelang.py** library parses low-token Memelang Memelang queries emitted by your LLM, converts them into SQL queries, which are then sent to your SQL-compatible database.
+
+The **/train/** folder contains example natural language to Memelang conversions for LLM training.
 
 
 ### Example
