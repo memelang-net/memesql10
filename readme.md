@@ -1,9 +1,21 @@
-> *Meme upon meme*
->
-> *Grammar flows axial*
->
-> *Knowledge takes shape*
+### About
 
+Memelang is an AI-optimized query language that significantly reduces token count and model size for LLM RAG. The code below is designed to be copy-and-pasted into your LLM.
+
+
+### Example
+
+This 50-token SQL query
+
+```sql
+SELECT t0.actor, t0.movie, t1.movie, t1.actor FROM roles AS t0, roles AS t1 WHERE t0.actor = 'Mark Hamill' AND t1.id != t0.id AND t1.movie = t0.movie
+```
+
+becomes a 22-token Memelang query:
+
+```memelang 
+roles actor :$a="Mark Hamill"; movie *;@ @ @; actor !$a
+```
 
 ### Links
 
